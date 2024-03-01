@@ -6,31 +6,31 @@ import java.lang.Math;
 import java.util.Scanner;
 
 interface Funkcja {
-    public double oblicz(double x);
+    public Double oblicz(Double x);
 }
 
 class FunkcjaSin implements Funkcja {
     
-    public double oblicz(double x) {
+    public Double oblicz(Double x) {
         return Math.sin(x);
     }
 }
 
 class FunkcjaKwadratowa implements Funkcja {
-    public double oblicz(double x) {
-        return x * x;
+    public Double oblicz(Double x) {
+        return x * x - 4;
     }
 }
 
 public class Main {
 
-    public static Double funkcja_sin(Double x) {
-        return Math.sin(x);
-    }
-
-    public static Double funkcja(Double x) {
-        return x*x-4;
-    }
+//    public static Double funkcja_sin(Double x) {
+//        return Math.sin(x);
+//    }
+//
+//    public static Double funkcja(Double x) {
+//        return x*x-4;
+//    }
 
     public static Double algorytm(Double a, Double b, Double epsilon, Integer iteracje, int wybor) {
         int i = 1;
@@ -42,15 +42,18 @@ public class Main {
         
         if (wybor == 1) {
             funkcja = new FunkcjaSin();
+        } else {
+            funkcja = new FunkcjaKwadratowa();
         }
-
-        if (funkcja(wynik) == 0) {
+        Double wartosc = funkcja.oblicz(wynik);
+        if (wartosc == 0) {
             return wynik;
         } else {
             while (i <= iteracje || Math.abs(wynik - poprzedni) >= epsilon) {
                 poprzedni = wynik;
-
-                if (funkcja(a)*funkcja(wynik) < 0) {
+                wartosc = funkcja.oblicz(wynik);
+                Double wartoscA = funkcja.oblicz(a);
+                if (wartoscA * wartosc < 0) {
                     b = wynik;
                 } else {
                     a = wynik;
@@ -61,6 +64,10 @@ public class Main {
             }
             return wynik;
         }
+    }
+
+    public static void plotGenerator(int wybor, Double a, Double b) {
+
     }
 
     public static void main(String[] args) {
@@ -79,11 +86,10 @@ public class Main {
         System.out.println("1. sin(x)");
         System.out.println("2. x^2 - 4");
 
-        Integer wybor;
-
-
+        Integer wybor = scan.nextInt();
 
         System.out.println(algorytm(zakres_gorny, zakres_dolny, epsilon, iteracje, wybor.intValue()));
+
 
     }
 }
