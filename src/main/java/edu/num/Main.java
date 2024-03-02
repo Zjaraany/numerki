@@ -3,31 +3,30 @@ package edu.num;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.lang.Math;
 import java.util.Scanner;
 
 public class Main {
 
-    public static Funkcja choice(int wybor) {
-        Funkcja funkcja;
-        if (wybor == 1) {
-            funkcja = new FunkcjaSin();
+    public static MathFunction choice(int functionChoice) {
+        MathFunction mathFunction;
+        if (functionChoice == 1) {
+            mathFunction = new SineFunction();
         } else {
-            funkcja = new FunkcjaKwadratowa();
+            mathFunction = new QuadraticFunction();
         }
-        return funkcja;
+        return mathFunction;
     }
 
-    public static void plotGenerator(int wybor, Double a, Double b, String outputFileName, int numberOfPoints) {
+    public static void plotGenerator(int functionChoice, Double a, Double b, String outputFileName, int numberOfPoints) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName));) {
             StringBuilder content = new StringBuilder();
-            Funkcja function = choice(wybor);
+            MathFunction mathFunction = choice(functionChoice);
             Double range = b - a;
             Double step = range / numberOfPoints;
             for (int i = 0; i < numberOfPoints; i++) {
                 content.append(a + i * step);
                 content.append(" ");
-                Double value = function.oblicz(a + i * step);
+                Double value = mathFunction.calculate(a + i * step);
                 content.append(value);
                 content.append("\n");
             }
@@ -40,39 +39,39 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
-        System.out.println("Wpisz liczbę dolnego zakresu: ");
-        Double zakres_dolny = scan.nextDouble();
-        System.out.println("Wpisz liczbę gornego zakresu: ");
-        Double zakres_gorny = scan.nextDouble();
+        System.out.println("Wpisz wartość dolnego zakresu: ");
+        Double bottomRange = scan.nextDouble();
+        System.out.println("Wpisz wartość gornego zakresu: ");
+        Double topRange = scan.nextDouble();
 
-        System.out.println("Wybierz funkcje:");
+        System.out.println("Wybierz funkcję:");
         System.out.println("1. sin(x)");
         System.out.println("2. x^2 - 4");
-        int wybor = scan.nextInt();
+        int stopCondition = scan.nextInt();
         System.out.println("Wybierz warunek stopu: ");
         System.out.println("1. Liczba iteracji");
-        System.out.println("2. Epislon");
-        Integer wyborStopu = scan.nextInt();
+        System.out.println("2. Dokładność (ε)");
+        Integer stopChoice = scan.nextInt();
 
 
-        Integer iteracje;
-        Double epsilon;
+        Integer iter;
+        Double eps;
         Algorithm algorithm = new Bisection();
 
-        if (wyborStopu == 1) {
-            System.out.println("Wpisz maksymalna liczbę iteracji: ");
-            iteracje = scan.nextInt();
-            System.out.println(algorithm.algorithm(zakres_dolny, zakres_gorny, iteracje, wybor));
-        } else if (wyborStopu == 2) {
-            System.out.println("Wpisz liczbę epislon: ");
-            epsilon = scan.nextDouble();
-            System.out.println(algorithm.algorithm(zakres_dolny, zakres_gorny, epsilon, wybor));
+        if (stopChoice == 1) {
+            System.out.println("Wpisz maksymalną liczbę iteracji: ");
+            iter = scan.nextInt();
+            System.out.println(algorithm.algorithm(bottomRange, topRange, iter, stopCondition));
+        } else if (stopChoice == 2) {
+            System.out.println("Wpisz dokładność (ε): ");
+            eps = scan.nextDouble();
+            System.out.println(algorithm.algorithm(bottomRange, topRange, eps, stopCondition));
         }
 
 
 
 
 
-        plotGenerator(wybor, zakres_dolny, zakres_gorny, "data/wyniki.txt", 100);
+        plotGenerator(stopCondition, bottomRange, topRange, "data/wyniki.txt", 100);
     }
 }
