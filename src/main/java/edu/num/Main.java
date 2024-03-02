@@ -2,11 +2,13 @@ package edu.num;
 
 import javax.imageio.IIOException;
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.lang.Math;
 import java.util.Scanner;
 
 interface Funkcja {
-    public Double oblicz(Double x);
+    Double oblicz(Double x);
 }
 
 class FunkcjaSin implements Funkcja {
@@ -32,24 +34,30 @@ public class Main {
 //        return x*x-4;
 //    }
 
-    public static Double algorytm(Double a, Double b, Double epsilon, Integer iteracje, int wybor) {
-        int i = 1;
-
-        Double wynik = (a + b) / 2;
-        Double poprzedni = 0d;
-        
+    public static Funkcja choice(int wybor) {
         Funkcja funkcja;
-        
         if (wybor == 1) {
             funkcja = new FunkcjaSin();
         } else {
             funkcja = new FunkcjaKwadratowa();
         }
+        return funkcja;
+    }
+
+    public static Double algorytm(Double a, Double b, Double epsilon, Integer iteracje, int wybor) {
+        int i = 1;
+
+        Double wynik = (a + b) / 2;
+        Double poprzedni = Double.POSITIVE_INFINITY;
+        
+        Funkcja funkcja = choice(wybor);
+        
+
         Double wartosc = funkcja.oblicz(wynik);
         if (wartosc == 0) {
             return wynik;
         } else {
-            while (i <= iteracje || Math.abs(wynik - poprzedni) >= epsilon) {
+            while (Math.abs(wynik - poprzedni) >= epsilon && i <= iteracje) {
                 poprzedni = wynik;
                 wartosc = funkcja.oblicz(wynik);
                 Double wartoscA = funkcja.oblicz(a);
@@ -66,8 +74,23 @@ public class Main {
         }
     }
 
-    public static void plotGenerator(int wybor, Double a, Double b) {
-
+    public static void plotGenerator(int wybor, Double a, Double b, String outputFileName, int numberOfPoints) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName));) {
+            StringBuilder content = new StringBuilder();
+            Funkcja function = choice(wybor);
+            Double range = b - a;
+            Double step = range / numberOfPoints;
+            for (int i = 0; i < numberOfPoints; i++) {
+                content.append(a + i * step);
+                content.append(" ");
+                Double value = function.oblicz(a + i * step);
+                content.append(value);
+                content.append("\n");
+            }
+            writer.write(content.toString());
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
@@ -88,8 +111,8 @@ public class Main {
 
         Integer wybor = scan.nextInt();
 
-        System.out.println(algorytm(zakres_gorny, zakres_dolny, epsilon, iteracje, wybor.intValue()));
+        System.out.println(algorytm(zakres_dolny, zakres_gorny, epsilon, iteracje, wybor.intValue()));
 
-
+        plotGenerator(wybor, zakres_dolny, zakres_gorny, "data/wyniki.txt", 100);
     }
 }
