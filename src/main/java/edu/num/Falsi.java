@@ -4,7 +4,7 @@ public class Falsi implements Algorithm {
     public Double algorithm(Double a, Double b, Integer iter, int functionChoice) {
         int i = 1;
 
-        MathFunction mathFunction = Main.choice(functionChoice);
+        MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
 
         Double chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
 
@@ -30,7 +30,7 @@ public class Falsi implements Algorithm {
     }
 
     public Double algorithm(Double a, Double b, Double eps, int functionChoice) {
-        MathFunction mathFunction = Main.choice(functionChoice);
+        MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
 
         Double chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
 

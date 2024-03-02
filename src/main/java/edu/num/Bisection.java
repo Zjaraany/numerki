@@ -7,7 +7,7 @@ public class Bisection implements Algorithm {
 
         Double result = (a + b) / 2;
 
-        MathFunction mathFunction = Main.choice(functionChoice);
+        MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
         
         Double value = mathFunction.calculate(result);
         if (value == 0) {
@@ -34,7 +34,7 @@ public class Bisection implements Algorithm {
         Double result = (a + b) / 2;
         Double previous = Double.POSITIVE_INFINITY;
 
-        MathFunction mathFunction = Main.choice(functionChoice);
+        MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
 
         Double value = mathFunction.calculate(result);
         if (value == 0) {

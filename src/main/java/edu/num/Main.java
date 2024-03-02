@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static MathFunction choice(int functionChoice) {
+    public static MathFunction mathFunctionChoice(int functionChoice) {
         MathFunction mathFunction;
         if (functionChoice == 1) {
             mathFunction = new SineFunction();
@@ -15,6 +15,7 @@ public class Main {
             mathFunction = new QuadraticFunction();
         } else {
             mathFunction = new PolynomialFunction();
+
         }
         return mathFunction;
     }
@@ -22,7 +23,7 @@ public class Main {
     public static void plotGenerator(int functionChoice, Double a, Double b, String outputFileName, int numberOfPoints) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName));) {
             StringBuilder content = new StringBuilder();
-            MathFunction mathFunction = choice(functionChoice);
+            MathFunction mathFunction = mathFunctionChoice(functionChoice);
             Double range = b - a;
             Double step = range / numberOfPoints;
             for (int i = 0; i < numberOfPoints; i++) {
@@ -41,6 +42,12 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
+
+        System.out.println("Wybierz algorytm:");
+        System.out.println("1. Reguła bisekcji");
+        System.out.println("2. Reguła Falsi");
+        Integer algorithmChoice = scan.nextInt();
+
         System.out.println("Wpisz wartość dolnego zakresu: ");
         Double bottomRange = scan.nextDouble();
         System.out.println("Wpisz wartość gornego zakresu: ");
@@ -60,7 +67,14 @@ public class Main {
 
         Integer iter;
         Double eps;
-        Algorithm algorithm = new Bisection();
+        Algorithm algorithm;// = new Bisection();
+
+        if (algorithmChoice == 1) {
+            algorithm = new Bisection();
+        } else {
+            algorithm = new Falsi();
+        }
+
 
         if (stopChoice == 1) {
             System.out.println("Wpisz maksymalną liczbę iteracji: ");
@@ -71,10 +85,6 @@ public class Main {
             eps = scan.nextDouble();
             System.out.println(algorithm.algorithm(bottomRange, topRange, eps, stopCondition));
         }
-
-
-
-
 
         plotGenerator(stopCondition, bottomRange, topRange, "data/wyniki.txt", 100);
     }
