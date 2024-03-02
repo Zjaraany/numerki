@@ -2,61 +2,56 @@ package edu.num;
 
 public class Bisection implements Algorithm {
 
-    public Double algorithm(Double a, Double b, Integer iteracje, int wybor) {
+    public Double algorithm(Double a, Double b, Integer iter, int functionChoice) {
         int i = 1;
 
-        Double wynik = (a + b) / 2;
+        Double result = (a + b) / 2;
 
-        Funkcja funkcja = Main.choice(wybor);
-
-
-        Double wartosc = funkcja.oblicz(wynik);
-        if (wartosc == 0) {
-            return wynik;
+        MathFunction mathFunction = Main.choice(functionChoice);
+        
+        Double value = mathFunction.calculate(result);
+        if (value == 0) {
+            return result;
         } else {
-            while (i <= iteracje) {
-                wartosc = funkcja.oblicz(wynik);
-                Double wartoscA = funkcja.oblicz(a);
-                if (wartoscA * wartosc < 0) {
-                    b = wynik;
+            while (i <= iter) {
+                value = mathFunction.calculate(result);
+                Double valueA = mathFunction.calculate(a);
+                if (valueA * value < 0) {
+                    b = result;
                 } else {
-                    a = wynik;
+                    a = result;
                 }
-                wynik = (a + b) / 2;
+                result = (a + b) / 2;
 
                 i++;
             }
-            return wynik;
+            return result;
         }
     }
 
-    public Double algorithm(Double a, Double b, Double epsilon, int wybor) {
+    public Double algorithm(Double a, Double b, Double eps, int functionChoice) {
 
+        Double result = (a + b) / 2;
+        Double previous = Double.POSITIVE_INFINITY;
 
-        Double wynik = (a + b) / 2;
-        Double poprzedni = Double.POSITIVE_INFINITY;
+        MathFunction mathFunction = Main.choice(functionChoice);
 
-        Funkcja funkcja = Main.choice(wybor);
-
-
-        Double wartosc = funkcja.oblicz(wynik);
-        if (wartosc == 0) {
-            return wynik;
+        Double value = mathFunction.calculate(result);
+        if (value == 0) {
+            return result;
         } else {
-            while (Math.abs(wynik - poprzedni) >= epsilon) {
-                poprzedni = wynik;
-                wartosc = funkcja.oblicz(wynik);
-                Double wartoscA = funkcja.oblicz(a);
-                if (wartoscA * wartosc < 0) {
-                    b = wynik;
+            while (Math.abs(result - previous) >= eps) {
+                previous = result;
+                value = mathFunction.calculate(result);
+                Double valueA = mathFunction.calculate(a);
+                if (valueA * value < 0) {
+                    b = result;
                 } else {
-                    a = wynik;
+                    a = result;
                 }
-                wynik = (a + b) / 2;
-
-
+                result = (a + b) / 2;
             }
-            return wynik;
+            return result;
         }
     }
 }
