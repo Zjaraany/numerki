@@ -11,8 +11,10 @@ public class Main {
         MathFunction mathFunction;
         if (functionChoice == 1) {
             mathFunction = new SineFunction();
-        } else {
+        } else if (functionChoice == 2) {
             mathFunction = new QuadraticFunction();
+        } else {
+            mathFunction = new PolynomialFunction();
         }
         return mathFunction;
     }
@@ -47,6 +49,8 @@ public class Main {
         System.out.println("Wybierz funkcję:");
         System.out.println("1. sin(x)");
         System.out.println("2. x^2 - 4");
+        System.out.println("3. 4x^5 + 7x^3 + x^2 - 7");
+
         int stopCondition = scan.nextInt();
         System.out.println("Wybierz warunek stopu: ");
         System.out.println("1. Liczba iteracji");
