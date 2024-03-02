@@ -57,14 +57,16 @@ public class Main {
 
         Integer iteracje;
         Double epsilon;
+        Algorithm algorithm = new Bisection();
+
         if (wyborStopu == 1) {
             System.out.println("Wpisz maksymalna liczbę iteracji: ");
             iteracje = scan.nextInt();
-            System.out.println(algorithm(zakres_dolny, zakres_gorny, iteracje, wybor));
+            System.out.println(algorithm.algorithm(zakres_dolny, zakres_gorny, iteracje, wybor));
         } else if (wyborStopu == 2) {
             System.out.println("Wpisz liczbę epislon: ");
             epsilon = scan.nextDouble();
-            System.out.println(algorithm(zakres_dolny, zakres_gorny, epsilon, wybor));
+            System.out.println(algorithm.algorithm(zakres_dolny, zakres_gorny, epsilon, wybor));
         }
 
 
