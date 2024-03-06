@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 public class Main {
 
+    private int[] fun;
+
+
     public static MathFunction mathFunctionChoice(int functionChoice) {
         MathFunction mathFunction;
         if (functionChoice == 1) {
@@ -20,10 +23,14 @@ public class Main {
         return mathFunction;
     }
 
-    public static void plotGenerator(int functionChoice, Double a, Double b, String outputFileName, int numberOfPoints) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName));) {
+    public static void plotGenerator(int functionChoice, Double a, Double b, String outputFileName, int numberOfPoints, Double solution) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
             StringBuilder content = new StringBuilder();
             MathFunction mathFunction = mathFunctionChoice(functionChoice);
+            content.append(solution);
+            content.append(" ");
+            content.append(mathFunction.calculate(solution));
+            content.append("\n");
             Double range = b - a;
             Double step = range / numberOfPoints;
             for (int i = 0; i < numberOfPoints; i++) {
@@ -75,17 +82,21 @@ public class Main {
             algorithm = new Falsi();
         }
 
+        Double sol;
 
         if (stopChoice == 1) {
             System.out.println("Wpisz maksymalną liczbę iteracji: ");
             iter = scan.nextInt();
-            System.out.println(algorithm.algorithm(bottomRange, topRange, iter, stopCondition));
-        } else if (stopChoice == 2) {
+            sol = algorithm.algorithm(bottomRange, topRange, iter, stopCondition);
+            System.out.println(sol);
+
+        } else { //if (stopChoice == 2) {
             System.out.println("Wpisz dokładność (ε): ");
             eps = scan.nextDouble();
-            System.out.println(algorithm.algorithm(bottomRange, topRange, eps, stopCondition));
+            sol = algorithm.algorithm(bottomRange, topRange, eps, stopCondition);
+            System.out.println(sol);
         }
 
-        plotGenerator(stopCondition, bottomRange, topRange, "data/wyniki.txt", 100);
+        plotGenerator(stopCondition, bottomRange, topRange, "data/wyniki.txt", 100, sol);
     }
 }
