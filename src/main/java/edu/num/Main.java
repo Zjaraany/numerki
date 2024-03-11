@@ -16,9 +16,10 @@ public class Main {
             mathFunction = new SineFunction();
         } else if (functionChoice == 2) {
             mathFunction = new QuadraticFunction();
-        } else {
+        } else if (functionChoice == 3) {
             mathFunction = new PolynomialFunction();
-
+        } else {
+            mathFunction = new ExponentialFunction();
         }
         return mathFunction;
     }
@@ -55,17 +56,20 @@ public class Main {
         System.out.println("2. Reguła Falsi");
         Integer algorithmChoice = scan.nextInt();
 
+        System.out.println("Wybierz funkcję:");
+        System.out.println("1. sin(x)");
+        System.out.println("2. x^2 - 4");
+        System.out.println("3. 4x^5 + 7x^3 + x^2 - 7");
+        System.out.println("4. e^(x^3 - 7) - 4");
+
+        int funChoice = scan.nextInt();
+
         System.out.println("Wpisz wartość dolnego zakresu: ");
         Double bottomRange = scan.nextDouble();
         System.out.println("Wpisz wartość gornego zakresu: ");
         Double topRange = scan.nextDouble();
 
-        System.out.println("Wybierz funkcję:");
-        System.out.println("1. sin(x)");
-        System.out.println("2. x^2 - 4");
-        System.out.println("3. 4x^5 + 7x^3 + x^2 - 7");
 
-        int stopCondition = scan.nextInt();
         System.out.println("Wybierz warunek stopu: ");
         System.out.println("1. Liczba iteracji");
         System.out.println("2. Dokładność (ε)");
@@ -87,16 +91,16 @@ public class Main {
         if (stopChoice == 1) {
             System.out.println("Wpisz maksymalną liczbę iteracji: ");
             iter = scan.nextInt();
-            sol = algorithm.algorithm(bottomRange, topRange, iter, stopCondition);
+            sol = algorithm.algorithm(bottomRange, topRange, iter, funChoice);
             System.out.println(sol);
 
         } else { //if (stopChoice == 2) {
             System.out.println("Wpisz dokładność (ε): ");
             eps = scan.nextDouble();
-            sol = algorithm.algorithm(bottomRange, topRange, eps, stopCondition);
+            sol = algorithm.algorithm(bottomRange, topRange, eps, funChoice);
             System.out.println(sol);
         }
 
-        plotGenerator(stopCondition, bottomRange, topRange, "data/wyniki.txt", 100, sol);
+        plotGenerator(funChoice, bottomRange, topRange, "data/wyniki.txt", 100, sol);
     }
 }

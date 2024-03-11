@@ -35,12 +35,14 @@ public class Falsi implements Algorithm {
         Double chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
 
         Double previous = Double.POSITIVE_INFINITY;
+        int counter = 0;
 
         Double value = mathFunction.calculate(chordResult);
         if (value == 0) {
             return chordResult;
         } else {
             while (Math.abs(chordResult - previous) >= eps) {
+                counter++;
                 previous = chordResult;
                 value = mathFunction.calculate(chordResult);
                 Double valueA = mathFunction.calculate(a);
@@ -51,6 +53,7 @@ public class Falsi implements Algorithm {
                 }
                 chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
             }
+            System.out.println("Liczba iteracji do osiągnięcia oczekiwanej dokładności: "+counter);
             return chordResult;
         }
     }
