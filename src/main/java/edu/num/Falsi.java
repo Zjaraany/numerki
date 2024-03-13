@@ -70,11 +70,14 @@ public class Falsi implements Algorithm {
                 a = chordResult;
             }
             chordResult = a - ((mathFunction.calculate(a) * (b - a))/(mathFunction.calculate(b)- mathFunction.calculate(a)));
-
         }
 
-        System.out.println("Nr iteracji: " + counter);
+        System.out.println("Liczba iteracji do osiągnięcia oczekiwanej dokładności: "+counter);
         return chordResult;
+
+
+
+
 
 
 //        Double value = mathFunction.calculate(chordResult);

@@ -64,10 +64,12 @@ public class Bisection implements Algorithm {
 
         Double result = (a + b) / 2;
         Double previous = a;
+        int counter = 0;
 
         MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
 
             while (Math.abs(result - previous) >= eps) {
+                counter++;
                 previous = result;
                 Double value = mathFunction.calculate(result);
                 Double valueA = mathFunction.calculate(a);
@@ -81,6 +83,7 @@ public class Bisection implements Algorithm {
                 }
                 result = (a + b) / 2;
             }
+            System.out.println("Liczba iteracji do osiągnięcia oczekiwanej dokładności: "+counter);
             return result;
 //        }
     }
