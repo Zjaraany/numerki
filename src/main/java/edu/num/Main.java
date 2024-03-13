@@ -12,7 +12,7 @@ public class Main {
     public static MathFunction mathFunctionChoice(int functionChoice) {
         MathFunction mathFunction;
         if (functionChoice == 1) {
-            mathFunction = new SineFunction();
+            mathFunction = new LogarithmicFunction();
         } else if (functionChoice == 2) {
             mathFunction = new QuadraticFunction();
         } else if (functionChoice == 3) {
@@ -58,7 +58,7 @@ public class Main {
         Integer algorithmChoice = scan.nextInt();
 
         System.out.println("Wybierz funkcję:");
-        System.out.println("1. sin(x)   (miejsce zerowe 2k*Pi)");
+        System.out.println("1. log10(x) * (3 - x) * x + 5   (miejsce zerowe 4,625)");
         System.out.println("2. x^2 - 4    (miejsce zerowe -2 oraz 2)");
         System.out.println("3. 4x^5 + 7x^3 + x^2 - 7    (miejsce zerowe ~0,8)");
         System.out.println("4. e^(x - 7) - 4   (miejsce zerowe ~8)"); //0,8573749041534029
