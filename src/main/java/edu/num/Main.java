@@ -9,7 +9,6 @@ public class Main {
 
     private int[] fun;
 
-
     public static MathFunction mathFunctionChoice(int functionChoice) {
         MathFunction mathFunction;
         if (functionChoice == 1) {
@@ -34,7 +33,7 @@ public class Main {
             content.append("\n");
             Double range = b - a;
             Double step = range / numberOfPoints;
-            for (int i = 0; i < numberOfPoints; i++) {
+            for (int i = 0; i <= numberOfPoints; i++) {
                 content.append(a + i * step);
                 content.append(" ");
                 Double value = mathFunction.calculate(a + i * step);
@@ -57,10 +56,10 @@ public class Main {
         Integer algorithmChoice = scan.nextInt();
 
         System.out.println("Wybierz funkcję:");
-        System.out.println("1. sin(x)");
-        System.out.println("2. x^2 - 4");
-        System.out.println("3. 4x^5 + 7x^3 + x^2 - 7");
-        System.out.println("4. e^(x^3 - 7) - 4");
+        System.out.println("1. sin(x)   (miejsce zerowe 2k*Pi)");
+        System.out.println("2. x^2 - 4    (miejsce zerowe -2 oraz 2)");
+        System.out.println("3. 4x^5 + 7x^3 + x^2 - 7    (miejsce zerowe ~0.8)");
+        System.out.println("4. e^(x - 7) - 4   (miejsce zerowe ~8)"); //0.8573749041534029
 
         int funChoice = scan.nextInt();
 
@@ -100,6 +99,6 @@ public class Main {
             System.out.println(sol);
         }
 
-        plotGenerator(funChoice, bottomRange, topRange, "data/wyniki.txt", 100, sol);
+        plotGenerator(funChoice, bottomRange, topRange, "data/wyniki.txt", 200, sol);
     }
 }

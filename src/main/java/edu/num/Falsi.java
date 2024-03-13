@@ -2,48 +2,32 @@ package edu.num;
 
 public class Falsi implements Algorithm {
     public Double algorithm(Double a, Double b, Integer iter, int functionChoice) {
-        int i = 1;
+        int i = 0;
 
         MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
 
         Double chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
 
-        while (i <= iter) {
-            chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
-            Double value = mathFunction.calculate(chordResult);
+        Double value;
+
+
+        while (i < iter) {
+            i++;
+            value = mathFunction.calculate(chordResult);
             Double valueA = mathFunction.calculate(a);
-
-            //System.out.println(i);
-
+            Double valueB = mathFunction.calculate(b);
             if (value == 0) {
+                System.out.println("Otrzymano rozwiązanie przy mniejszej liczbie iteracji: "+i);
                 return chordResult;
             } else if (valueA * value < 0) {
                 b = chordResult;
-            } else {
+            } else if (valueB * value < 0) {
                 a = chordResult;
             }
-
-            i++;
+            chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
         }
-        return chordResult;
 
-//        if (value == 0) {
-//            return chordResult;
-//        } else {
-//            while (i <= iter) {
-//                value = mathFunction.calculate(chordResult);
-//                Double valueA = mathFunction.calculate(a);
-//                if (valueA * value < 0) {
-//                    b = chordResult;
-//                } else {
-//                    a = chordResult;
-//                }
-//                chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
-//
-//                i++;
-//            }
-//            return chordResult;
-//        }
+        return chordResult;
     }
 
     public Double algorithm(Double a, Double b, Double eps, int functionChoice) {
@@ -54,48 +38,26 @@ public class Falsi implements Algorithm {
 
         int counter = 0;
 
+        Double value;// = mathFunction.calculate(chordResult);
+
         while (Math.abs(chordResult - previous) >= eps) {
-            Double value = mathFunction.calculate(chordResult);
-            Double valueA = mathFunction.calculate(a);
-
-            previous = chordResult;
-
             counter++;
-
+            previous = chordResult;
+            value = mathFunction.calculate(chordResult);
+            Double valueA = mathFunction.calculate(a);
+            Double valueB = mathFunction.calculate(b);
             if (value == 0) {
                 return chordResult;
             } else if (valueA * value < 0) {
                 b = chordResult;
-            } else {
+            } else if (valueB * value < 0) {
                 a = chordResult;
             }
-            chordResult = a - ((mathFunction.calculate(a) * (b - a))/(mathFunction.calculate(b)- mathFunction.calculate(a)));
+            chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
         }
 
         System.out.println("Liczba iteracji do osiągnięcia oczekiwanej dokładności: "+counter);
         return chordResult;
 
-
-
-
-
-
-//        Double value = mathFunction.calculate(chordResult);
-//        if (value == 0) {
-//            return chordResult;
-//        } else {
-//            while (Math.abs(chordResult - previous) >= eps) {
-//                previous = chordResult;
-//                value = mathFunction.calculate(chordResult);
-//                Double valueA = mathFunction.calculate(a);
-//                if (valueA * value < 0) {
-//                    b = chordResult;
-//                } else {
-//                    a = chordResult;
-//                }
-//                chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
-//            }
-//            return chordResult;
-//        }
     }
 }
