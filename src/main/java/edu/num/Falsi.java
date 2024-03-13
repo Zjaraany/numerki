@@ -56,7 +56,7 @@ public class Falsi implements Algorithm {
 
         Double chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
 
-        Double previous = Double.POSITIVE_INFINITY;
+        Double previous = b;
         int counter = 0;
 
         Double value;// = mathFunction.calculate(chordResult);
