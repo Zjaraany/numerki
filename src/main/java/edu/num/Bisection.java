@@ -3,13 +3,14 @@ package edu.num;
 public class Bisection implements Algorithm {
 
     public Double algorithm(Double a, Double b, Integer iter, int functionChoice) {
-        int i = 1;
+        int i = 0;
 
         Double result = (a + b) / 2;
 
         MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
 
-        while (i <= iter) {
+        while (i < iter) {
+            i++;
             result = (a + b) / 2;
 
             Double value = mathFunction.calculate(result);
@@ -17,6 +18,7 @@ public class Bisection implements Algorithm {
             Double valueB = mathFunction.calculate(b);
 
             if (value == 0) {
+                System.out.println("Otrzymano rozwiązanie przy mniejszej liczbie iteracji: "+i);
                 return result;
             } else if (valueA * value < 0) {
                 b = result;
@@ -24,7 +26,7 @@ public class Bisection implements Algorithm {
                 a = result;
             }
 
-            i++;
+
         }
 
         return result;
@@ -75,6 +77,7 @@ public class Bisection implements Algorithm {
                 Double valueA = mathFunction.calculate(a);
                 Double valueB = mathFunction.calculate(b);
                 if (value == 0) {
+                    System.out.println("Liczba iteracji do osiągnięcia oczekiwanej dokładności: " + counter);
                     return result;
                 } else if (valueA * value < 0) {
                     b = result;
@@ -83,7 +86,7 @@ public class Bisection implements Algorithm {
                 }
                 result = (a + b) / 2;
             }
-            System.out.println("Liczba iteracji do osiągnięcia oczekiwanej dokładności: "+counter);
+            System.out.println("Liczba iteracji do osiągnięcia oczekiwanej dokładności: " + counter);
             return result;
 //        }
     }
