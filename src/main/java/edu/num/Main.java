@@ -55,17 +55,19 @@ public class Main {
         System.out.println("2. Reguła Falsi");
         Integer algorithmChoice = scan.nextInt();
 
-        System.out.println("Wpisz wartość dolnego zakresu: ");
-        Double bottomRange = scan.nextDouble();
-        System.out.println("Wpisz wartość gornego zakresu: ");
-        Double topRange = scan.nextDouble();
-
         System.out.println("Wybierz funkcję:");
         System.out.println("1. sin(x)");
         System.out.println("2. x^2 - 4");
         System.out.println("3. 4x^5 + 7x^3 + x^2 - 7");
 
         int stopCondition = scan.nextInt();
+
+        System.out.println("Wpisz wartość dolnego zakresu: ");
+        Double bottomRange = scan.nextDouble();
+        System.out.println("Wpisz wartość gornego zakresu: ");
+        Double topRange = scan.nextDouble();
+
+
         System.out.println("Wybierz warunek stopu: ");
         System.out.println("1. Liczba iteracji");
         System.out.println("2. Dokładność (ε)");
