@@ -17,8 +17,10 @@ public class Main {
             mathFunction = new QuadraticFunction();
         } else if (functionChoice == 3) {
             mathFunction = new PolynomialFunction();
-        } else {
+        } else if (functionChoice == 4) {
             mathFunction = new ExponentialFunction();
+        } else {
+            mathFunction = new ExpandedSineFunction();
         }
         return mathFunction;
     }
@@ -58,8 +60,9 @@ public class Main {
         System.out.println("Wybierz funkcję:");
         System.out.println("1. sin(x)   (miejsce zerowe 2k*Pi)");
         System.out.println("2. x^2 - 4    (miejsce zerowe -2 oraz 2)");
-        System.out.println("3. 4x^5 + 7x^3 + x^2 - 7    (miejsce zerowe ~0.8)");
-        System.out.println("4. e^(x - 7) - 4   (miejsce zerowe ~8)"); //0.8573749041534029
+        System.out.println("3. 4x^5 + 7x^3 + x^2 - 7    (miejsce zerowe ~0,8)");
+        System.out.println("4. e^(x - 7) - 4   (miejsce zerowe ~8)"); //0,8573749041534029
+        System.out.println("5. sin(0,1x + 2,5)   (miejsce zerowe 6,416 + 2k*Pi)");
 
         int funChoice = scan.nextInt();
 
@@ -67,7 +70,6 @@ public class Main {
         Double bottomRange = scan.nextDouble();
         System.out.println("Wpisz wartość gornego zakresu: ");
         Double topRange = scan.nextDouble();
-
 
         System.out.println("Wybierz warunek stopu: ");
         System.out.println("1. Liczba iteracji");
