@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    private int[] fun;
+    private static Scanner scan = new Scanner(System.in);
 
     public static MathFunction mathFunctionChoice(int functionChoice) {
         MathFunction mathFunction;
@@ -19,16 +19,40 @@ public class Main {
             mathFunction = new PolynomialFunction();
         } else if (functionChoice == 4) {
             mathFunction = new ExponentialFunction();
-        } else {
+        } else if (functionChoice == 5) {
             mathFunction = new ExpandedSineFunction();
+        } else {
+
+            System.out.println("Podaj stopień wielomianu: ");
+            int degree = scan.nextInt();
+            double[] coefficient = new double[degree + 1];
+            for (int i = degree; i >= 0; i--) {
+                if (i != 0) {
+                    System.out.println("Podaj współczynnik dla x^"+i);
+                    coefficient[i] = scan.nextDouble();
+                } else {
+                    System.out.println("Podaj wyraz wolny:");
+                    coefficient[i] = scan.nextDouble();
+                }
+
+            }
+
+            mathFunction = new Horner(coefficient);
+//            for (int i = degree; i >= 0; i--) {
+//                if (i != 0) {
+//                    System.out.print(coefficient[i]+"x^"+i+" + ");
+//                } else {
+//                    System.out.println(coefficient[i]);
+//                }
+//            }
         }
         return mathFunction;
     }
 
-    public static void plotGenerator(int functionChoice, Double a, Double b, String outputFileName, int numberOfPoints, Double solution) {
+    public static void plotGenerator(MathFunction mathFunction, Double a, Double b, String outputFileName, int numberOfPoints, Double solution) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
             StringBuilder content = new StringBuilder();
-            MathFunction mathFunction = mathFunctionChoice(functionChoice);
+//            MathFunction mathFunction = mathFunctionChoice(functionChoice);
             content.append(solution);
             content.append(" ");
             content.append(mathFunction.calculate(solution));
@@ -50,8 +74,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner scan = new Scanner(System.in);
-
         System.out.println("Wybierz algorytm:");
         System.out.println("1. Reguła bisekcji");
         System.out.println("2. Reguła Falsi");
@@ -61,10 +83,13 @@ public class Main {
         System.out.println("1. log10(x) * (3 - x) * x + 5   (miejsce zerowe 4,625)");
         System.out.println("2. x^2 - 4    (miejsce zerowe -2 oraz 2)");
         System.out.println("3. 4x^5 + 7x^3 + x^2 - 7    (miejsce zerowe ~0,8)");
-        System.out.println("4. e^(x - 7) - 4   (miejsce zerowe ~8)"); //0,8573749041534029
+        System.out.println("4. e^(x - 7) - 4   (miejsce zerowe ~8)");
         System.out.println("5. sin(0,1x + 2,5)   (miejsce zerowe 6,416 + 2k*Pi)");
+        System.out.println("6. Dowolny wielomian");
 
         int funChoice = scan.nextInt();
+
+        MathFunction mathFunction = Main.mathFunctionChoice(funChoice);
 
         System.out.println("Wpisz wartość dolnego zakresu: ");
         Double bottomRange = scan.nextDouble();
@@ -79,7 +104,7 @@ public class Main {
 
         Integer iter;
         Double eps;
-        Algorithm algorithm;// = new Bisection();
+        Algorithm algorithm;
 
         if (algorithmChoice == 1) {
             algorithm = new Bisection();
@@ -92,16 +117,16 @@ public class Main {
         if (stopChoice == 1) {
             System.out.println("Wpisz maksymalną liczbę iteracji: ");
             iter = scan.nextInt();
-            sol = algorithm.algorithm(bottomRange, topRange, iter, funChoice);
+            sol = algorithm.algorithm(bottomRange, topRange, iter, mathFunction);
             System.out.println(sol);
 
         } else { //if (stopChoice == 2) {
             System.out.println("Wpisz dokładność (ε): ");
             eps = scan.nextDouble();
-            sol = algorithm.algorithm(bottomRange, topRange, eps, funChoice);
+            sol = algorithm.algorithm(bottomRange, topRange, eps, mathFunction);
             System.out.println(sol);
         }
 
-        plotGenerator(funChoice, bottomRange, topRange, "data/wyniki.txt", 200, sol);
+        plotGenerator(mathFunction, bottomRange, topRange, "data/wyniki.txt", 200, sol);
     }
 }

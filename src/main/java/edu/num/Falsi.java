@@ -1,10 +1,10 @@
 package edu.num;
 
 public class Falsi implements Algorithm {
-    public Double algorithm(Double a, Double b, Integer iter, int functionChoice) {
+    public Double algorithm(Double a, Double b, Integer iter, MathFunction mathFunction) {
         int i = 0;
 
-        MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
+//        MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
 
         Double chordResult = a - (mathFunction.calculate(a) * (b - a)/(mathFunction.calculate(b)- mathFunction.calculate(a)));
 
@@ -30,8 +30,8 @@ public class Falsi implements Algorithm {
         return chordResult;
     }
 
-    public Double algorithm(Double a, Double b, Double eps, int functionChoice) {
-        MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
+    public Double algorithm(Double a, Double b, Double eps, MathFunction mathFunction) {
+//        MathFunction mathFunction = Main.mathFunctionChoice(functionChoice);
 
         Double chordResult = a - ((mathFunction.calculate(a) * (b - a))/(mathFunction.calculate(b)- mathFunction.calculate(a)));
         Double previous = b;
