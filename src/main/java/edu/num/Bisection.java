@@ -11,7 +11,6 @@ public class Bisection implements Algorithm {
 
         while (i < iter) {
             i++;
-            result = (a + b) / 2;
 
             Double value = mathFunction.calculate(result);
             Double valueA = mathFunction.calculate(a);
@@ -25,10 +24,10 @@ public class Bisection implements Algorithm {
             } else if (valueB * value < 0) {
                 a = result;
             }
-
+            result = (a + b) / 2;
 
         }
-
+        System.out.println("Liczba iteracji do osiągnięcia oczekiwanej dokładności: " + i);
         return result;
 
 

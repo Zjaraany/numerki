@@ -43,6 +43,7 @@ public class Main {
                 content.append("\n");
             }
             writer.write(content.toString());
+//0.8573750644922262
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -87,7 +88,7 @@ public class Main {
             algorithm = new Falsi();
         }
 
-        Double sol;
+        Double sol; //4.625256538391113
 
         if (stopChoice == 1) {
             System.out.println("Wpisz maksymalną liczbę iteracji: ");
