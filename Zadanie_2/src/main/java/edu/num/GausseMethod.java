@@ -7,6 +7,8 @@ public class GausseMethod {
 
     private ArrayList<ArrayList<Double>> coefficent;
 
+    private double epsilon;
+
     GausseMethod (ArrayList<ArrayList<Double>> list) {
         coefficent = list;
     }
@@ -24,10 +26,34 @@ public class GausseMethod {
 
         int size = copy.size();
 
+        int move = 0;
+
         for (int i = 0; i < size - 1; i++) {
+
+            int index = i;
+            double max = 0;
+
+
+            for (int rowChange = i; rowChange < size - 1; rowChange++) {
+                if (max < copy.get(rowChange).get(i)) {
+                    max = copy.get(rowChange).get(i);
+                    index = rowChange;
+                }
+            }
+
+            if (max < epsilon) {
+                move++;
+            } else {
+                //zamiana wierszy
+                ArrayList<Double> temp = copy.get(index);
+                copy.set(index, copy.get(i));
+                copy.set(i, temp);
+            }
+
+
             for (int j = i + 1; j < size; j++) {
                 double a = copy.get(j).get(i) / copy.get(i).get(i);
-                for (int k = i; k < copy.get(i).size(); k++) {
+                for (int k = i + move; k < copy.get(i).size(); k++) {
                     double substraction = copy.get(j).get(k) - (a *copy.get(i).get(k));
                     copy.get(j).set(k, substraction);
                 }

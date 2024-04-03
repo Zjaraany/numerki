@@ -16,7 +16,7 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        String sciezka = "Zadanie_2/data/dane";
+        String sciezka = "data/dane";
 
         ArrayList<ArrayList<Double>> wspolczynniki = new ArrayList<>();
 
