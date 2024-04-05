@@ -5,14 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//3 3 1 -1 -13
-//        -1 -1 2 1 1
-//        2 1 -1 -2 21
-//        -1 1 2 -3 -5
-
 
 public class Main {
 
+    // wyświetlanie pomocnicze
     public static void show(ArrayList<ArrayList<Double>> list) {
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.get(i).size(); j++) {
@@ -22,33 +18,42 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        String sciezka = "data/dane";
+        String path = "data/dane";
 
-        ArrayList<ArrayList<Double>> wspolczynniki = new ArrayList<>();
+        ArrayList<ArrayList<Double>> coefficients = new ArrayList<>();
 
         try {
-            File plik = new File(sciezka);
-            Scanner scanner = new Scanner(plik);
+            File file = new File(path);
+            Scanner fileScanner = new Scanner(file);
             int i = 0;
-            while (scanner.hasNextLine()) {
-                wspolczynniki.add(new ArrayList<>());
-                String line = scanner.nextLine();
+            while (fileScanner.hasNextLine()) {
+                coefficients.add(new ArrayList<>());
+                String line = fileScanner.nextLine();
                 String[] parts = line.split("\\s+");
                 for (int j = 0; j < parts.length; j++) {
                     String s = parts[j];
-                    wspolczynniki.get(i).add(Double.valueOf(s));
+                    coefficients.get(i).add(Double.valueOf(s));
                 }
                 i++;
             }
+            fileScanner.close();
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Podaj wartość epsilon lub wpisz cokolwiek, co nie jest liczbą, aby przyjąć wartość domyślną ε = 0.00000001");
+            double epsilon = 0.00000001;
+            if (scan.hasNextDouble()) {
+                epsilon = scan.nextDouble();
+            }
 
-            scanner.close();
-            show(wspolczynniki);
-            System.out.println();
-            GausseMethod gausseMethod = new GausseMethod(wspolczynniki, 0.00000001);
+            System.out.println("Otrzymane wyniki:");
+            GausseMethod gausseMethod = new GausseMethod(coefficients, epsilon);
             ArrayList<ArrayList<Double>> b = gausseMethod.triangleMatrix();
-//            show(b);
+
             try {
-                System.out.println(gausseMethod.getResults(b));
+                ArrayList<Double> results = gausseMethod.getResults(b);
+                for (int j = 0; j < results.size(); j++) {
+                    System.out.print("x" + (j+1) + " = " + results.get(j) + "\n");
+                }
+                //System.out.println(gausseMethod.getResults(b));
             } catch (GausseMethodException e) {
                 System.out.println(e.getMessage());
             }

@@ -117,10 +117,8 @@ public class GausseMethod {
 
         int size = matrix.size();
 
-        Main.show(matrix);
-
         if (rank != getRank(matrixA)) {
-            throw new GausseMethodException("Sprzeczny");
+            throw new GausseMethodException("Układ sprzeczny");
         } else if (rank == matrixA.getFirst().size()) {
             // metoda podstawiania w tył
             for (int i = size - 1; i >= 0; i--) {
@@ -137,7 +135,7 @@ public class GausseMethod {
             return results;
 
         } else { //if (rank < matrixA.getFirst().size()) {
-            throw new GausseMethodException("Nieoznaczony - rozwiązanie posiada następującą liczbę parametrów: "+(matrixA.getFirst().size() - rank));
+            throw new GausseMethodException("Układ nieoznaczony - rozwiązanie posiada następującą liczbę parametrów: "+(matrixA.getFirst().size() - rank));
         }
     }
 }
