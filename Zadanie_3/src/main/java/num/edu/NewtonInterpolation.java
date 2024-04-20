@@ -1,21 +1,24 @@
 package num.edu;
 
+import java.util.Random;
+import java.util.Stack;
+
 public class NewtonInterpolation {
-//    private Double rangeA;
-//    private Double rangeB;
+    private Double rangeA;
+    private Double rangeB;
     private Double nodeX[];
     //    private Double nodeY [] = new Double[nodeX.length];;
     private MathFunction mathFunction;
 
-    NewtonInterpolation(MathFunction fun, Double X[]) {
+    NewtonInterpolation(MathFunction fun, Double a, Double b,Double X[]) {
 //        to by ewentualnie było w konstruktorze, bo jest w poleceniu: Double a, Double b,
         mathFunction = fun;
-//        rangeA = a;
-//        rangeB = b;
+        rangeA = a;
+        rangeB = b;
         nodeX = X;
     }
 
-    public Double[] getResults() {
+    public Double[] getDifferenceQuotients() {
         Integer nodesNumber = nodeX.length;
 
         Double nodeY[] = new Double[nodesNumber];
@@ -36,16 +39,15 @@ public class NewtonInterpolation {
                         (nodeX[i + j] - nodeX[i]);
             }
         }
-
         return differenceQuotients[0];
     }
 
-    public void writeNewtonPolynomial(Double[] coefficients) {
+    public String writeNewtonPolynomial(Double[] quotients) {
 
-        String s = "W(x) = " + coefficients[0] + " ";
+        String s = "W(x) = " + quotients[0] + " ";
         String part = "";
 
-        for (int i = 1; i < coefficients.length; i++) {
+        for (int i = 1; i < quotients.length; i++) {
             String sign;
             if (nodeX[i - 1] > 0) {
                 sign = "- ";
@@ -54,26 +56,38 @@ public class NewtonInterpolation {
             }
             part = part + " * (x " + sign + Math.abs(nodeX[i - 1]) + ") ";
             String signCo;
-            if (coefficients[i] > 0) {
+            if (quotients[i] > 0) {
                 signCo = "+ ";
             } else {
                 signCo = "- ";
             }
-            s = s + signCo + Math.abs(coefficients[i]) + part;
+            s = s + signCo + Math.abs(quotients[i]) + part;
         }
-        System.out.println(s);
+        return s;
     }
 
-    public Double calculateFromNewton (Double[] coefficients, Double x) {
-        Double result = 0.0;
+    public Double calculateFromNewton (Double[] quotients, Double x) {
+        Double result;
         Double part = 1.0;
-        result = coefficients[0];
-        for (int i = 1; i < coefficients.length; i++) {
+        result = quotients[0];
+        for (int i = 1; i < quotients.length; i++) {
             part = part * (x - nodeX[i - 1]);
-            result = result + coefficients[i] * part;
+            result = result + quotients[i] * part;
         }
-
         return result;
     }
+
+//    public Double [] generateRandomNodes(Integer nodes) {
+//        Double partLength = ((rangeB-rangeA)/(nodes+1));
+//        Double nodesX [] = new Double[nodes];
+//        Random random = new Random();
+//        nodesX[0] = rangeA + partLength + random.nextDouble() * partLength - partLength / 2;;
+//        for (int i = 1; i < nodes; i++) {
+//            nodesX[i] = nodesX[i-1] + partLength + random.nextDouble() * partLength - partLength / 2;;
+//        }
+//        return nodesX;
+//    }
+
+
 
 }
