@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+
+# Ścieżki do trzech różnych plików
+sciezki = ["C:/Users/ozare/Desktop/Metody_numeryczne/numerki/Zadanie_3/data/original",
+           "C:/Users/ozare/Desktop/Metody_numeryczne/numerki/Zadanie_3/data/Newton",
+           "C:/Users/ozare/Desktop/Metody_numeryczne/numerki/Zadanie_3/data/specialPoints"]
+
+
+
+# Inicjalizacja list na punkty x i y dla każdego pliku
+x_data = [[] for _ in range(len(sciezki))]
+y_data = [[] for _ in range(len(sciezki))]
+
+# Wczytanie danych z każdego pliku
+for i, sciezka in enumerate(sciezki):
+    with open(sciezka, 'r') as file:
+        lines = file.readlines()
+
+        x_data[i].append(float(lines[0].split()[0]))
+        y_data[i].append(float(lines[0].split()[1]))
+
+        for line in lines[1:]:
+            x_point, y_point = map(float, line.split())
+            x_data[i].append(x_point)
+            y_data[i].append(y_point)
+
+# Wykres
+plt.figure(figsize=(8, 6))
+
+nazwy = ['Funkcja', 'W(x) Newtona', 'Węzły']
+
+
+for i in range(len(sciezki)):
+    if i == 2:  # dla trzeciej ścieżki użyj scatter tylko dla punktów
+        plt.scatter(x_data[i], y_data[i], color='green', label=nazwy[i])
+    else:
+        plt.plot(x_data[i], y_data[i], label=nazwy[i])
+
+plt.xlabel('x', labelpad=10)
+plt.ylabel('f(x)', labelpad=10)
+plt.title('Interpolacja Newtona')
+plt.grid(True)
+plt.legend()
+plt.show()

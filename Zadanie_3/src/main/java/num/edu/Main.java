@@ -128,7 +128,7 @@ public class Main {
             try {
                 File file = new File("data/wezlyX");
                 Scanner fileScanner = new Scanner(file);
-                while (fileScanner.hasNext()) {
+                if (fileScanner.hasNext()) {
                     for (int i = 0; i < nodesNumber; i++) {
                         nodeX[i] = Double.parseDouble(fileScanner.nextLine());
                     }

@@ -7,11 +7,9 @@ public class NewtonInterpolation {
     private Double rangeA;
     private Double rangeB;
     private Double nodeX[];
-    //    private Double nodeY [] = new Double[nodeX.length];;
     private MathFunction mathFunction;
 
     NewtonInterpolation(MathFunction fun, Double a, Double b,Double X[]) {
-//        to by ewentualnie było w konstruktorze, bo jest w poleceniu: Double a, Double b,
         mathFunction = fun;
         rangeA = a;
         rangeB = b;
