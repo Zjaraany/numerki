@@ -16,17 +16,14 @@ public class Approximation {
         return coeffs;
     }
 
+
     Double transform(Double x, Double a, Double b) {
         return (2 * x - (b + a)) / (b - a);
     }
 
-    Double inverseTransform(Double t, Double a, Double b) {
-        return (b - a) * t / 2 + (b + a) / 2;
-    }
 
     Double approximate(Double[] coeffs, Double x, Double a, Double b) {
         Double t = transform(x, a, b);
-//        Double t = inverseTransform(x, a , b);
         Double result = 0.0;
         int degree = coeffs.length;
 
@@ -48,7 +45,6 @@ public class Approximation {
             Double approxValue = approximate(coeffs, x, a, b);
             sum += Math.pow(originalValue - approxValue, 2);
         }
-
         return Math.sqrt(sum / numberOfPoints);
     }
 

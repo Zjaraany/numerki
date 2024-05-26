@@ -116,16 +116,19 @@ public class Main {
 
         Approximation approximation = new Approximation();
         Double[] coeffs;
+        Double error;
 
         if (option == 1) {
             System.out.println("Podaj stopień wielomianu aproksymacyjnego:");
             degree = scan.nextInt();
             coeffs = approximation.calculateCoefficients(mathFunction, degree, nodesNumber, valA, valB);
+            error = approximation.calculateError(mathFunction, coeffs, valA, valB, 200);
+            System.out.println("Obliczono błąd: " + error);
         } else {
             System.out.println("Podaj oczekiwany błąd aproksymacji:");
             expectedError = scan.nextDouble();
             coeffs = null;
-            Double error = Double.MAX_VALUE;
+            error = Double.MAX_VALUE;
             degree = 0;
             int maxDegree = 20; // maksymalny stopień wielomianu dla bezpieczeństwa
 
@@ -142,16 +145,8 @@ public class Main {
             }
         }
 
-//        System.out.println("Kwadratura Gaussa-Czebyszewa");
-//        System.out.println("Podaj liczbę węzłów:");
-//        nodesNumber = scan.nextInt();
-//
-//        Approximation approximation = new Approximation();
-//        Double[] coeffs = approximation.calculateCoefficients(mathFunction, degree, nodesNumber, valA, valB);
-
             Main.plotGeneratorOriginal(mathFunction, valA, valB, "data/original", 800);
             Main.plotGeneratorApproximation(approximation, coeffs, valA, valB, "data/approx", 800);
-
 
     }
 
